@@ -1,10 +1,23 @@
-import { GetServerSidePropsContext, InferGetServerSidePropsType } from "next";
+import { GetStaticPropsContext, InferGetStaticPropsType } from "next";
 import style from ".//[id].module.css";
 import fetchOneBook from "@/lib/fetch-one-book";
 
-export const getServerSideProps = async (
-  context: GetServerSidePropsContext
-) => {
+export const getStaticPaths = () => {
+  return {
+    // 존재할 수 있는 파라미터 설정 -> 문자열로만 설정해야 정상적으로 인식
+    paths: [
+      { params: { id: "1" } },
+      { params: { id: "2" } },
+      { params: { id: "3" } },
+    ],
+    // 폴백 옵션: 예외 상황 -> 대비책
+    // <세 가지 옵션>
+    // - false -> not found 페이지 -> 없는 페이지 취급
+    fallback: false,
+  };
+};
+
+export const getStaticProps = async (context: GetStaticPropsContext) => {
   const id = context.params!.id; // ! -> id가 무조건 있을것이라고 단언
   const book = await fetchOneBook(Number(id));
 
@@ -15,7 +28,7 @@ export const getServerSideProps = async (
 
 export default function Page({
   book,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+}: InferGetStaticPropsType<typeof getStaticProps>) {
   if (!book) return "문제가 발생했습니다. 다시 시도하세요.";
   const { title, subTitle, description, author, publisher, coverImgUrl } = book;
 
