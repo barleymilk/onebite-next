@@ -19,7 +19,6 @@ export const getStaticProps = async () => {
       allBooks,
       recoBooks,
     },
-    revalidate: 3, // ISR 방식 - 해당 페이지를 3초 주기로 재생성
   };
 };
 
