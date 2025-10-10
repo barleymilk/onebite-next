@@ -5,6 +5,7 @@ import BookItem from "@/components/book-item";
 import fetchBooks from "@/lib/fetch-books";
 import { BookData } from "@/types";
 import { useRouter } from "next/router";
+import Head from "next/head";
 
 // export const getStaticProps = async (context: GetStaticPropsContext) => {
 //   // 빌드 타임에는 쿼리 스트링이 없음 -> query 프로퍼티가 존재하지 않음.
@@ -35,11 +36,22 @@ export default function Page() {
   }, [q]);
 
   return (
-    <div>
-      {books.map((book) => (
-        <BookItem key={book.id} {...book} />
-      ))}
-    </div>
+    <>
+      <Head>
+        <title>한입북스 - 검색결과</title>
+        <meta property="og:image" content="/thumbnail.png" />
+        <meta property="og:title" content="한입북스 - 검색결과" />
+        <meta
+          property="og:description"
+          content="한입 북스에 등록된 도서들을 만나보세요"
+        />
+      </Head>
+      <div>
+        {books.map((book) => (
+          <BookItem key={book.id} {...book} />
+        ))}
+      </div>
+    </>
   );
 }
 
