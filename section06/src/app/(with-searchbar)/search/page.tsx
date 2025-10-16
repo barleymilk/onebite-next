@@ -24,17 +24,15 @@ async function SearchResult({ q }: { q: string }) {
   );
 }
 
-export default function Page({
+export default async function Page({
   searchParams,
 }: {
-  searchParams: { q?: string };
+  searchParams: Promise<{ q?: string }>;
 }) {
+  const { q } = await searchParams;
   return (
-    <Suspense
-      key={searchParams.q || ""}
-      fallback={<BookListSkeleton count={3} />}
-    >
-      <SearchResult q={searchParams.q || ""} />
+    <Suspense key={q || ""} fallback={<BookListSkeleton count={3} />}>
+      <SearchResult q={q || ""} />
     </Suspense>
   );
 }
