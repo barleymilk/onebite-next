@@ -4,6 +4,7 @@ import { BookData } from "@/types";
 import { delay } from "@/util/delay";
 import { Suspense } from "react";
 import BookListSkeleton from "@/components/skeleton/book-list-skeleton";
+import { Metadata } from "next";
 
 // export const dynamic = "error";
 // 특정 페이지의 유형을 강제로 Static, Dynamic 페이지로 설정
@@ -11,6 +12,16 @@ import BookListSkeleton from "@/components/skeleton/book-list-skeleton";
 // 2. force-dynamic : 페이지를 강제로 Dynamic 페이지로 설정
 // 3. force-static : 페이지를 강제로 Static 페이지로 설정 -> 쿼리값에 의존하는 페이지에서 검색 동작이 제대로 되지 않는 부작용이 일어남.
 // 4. error : 페이지를 강제로 Static 페이지로 설정 (설정하면 안 되는 이유가 있다면 빌드 오류를 발생시킴)
+
+export const metadata: Metadata = {
+  title: "한입 북스",
+  description: "한입 북스에 등록된 도서를 만나보세요",
+  openGraph: {
+    title: "한입 북스",
+    description: "한입 북스에 등록된 도서를 만나보세요",
+    images: ["/thumbnail.png"],
+  },
+};
 
 async function AllBooks() {
   await delay(1500);
