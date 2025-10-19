@@ -13,14 +13,15 @@ async function BookDetail({ bookId }: { bookId: string }) {
     `${process.env.NEXT_PUBLIC_API_SERVER_URL}/book/${bookId}`,
     { cache: "force-cache" }
   );
+
   if (!response.ok) {
     if (response.status === 404) {
       notFound();
     }
     return <div>오류가 발생했습니다.</div>;
   }
-  const book: BookData = await response.json();
 
+  const book: BookData = await response.json();
   const { title, subTitle, description, author, publisher, coverImgUrl } = book;
 
   return (
@@ -62,17 +63,17 @@ async function ReviewList({ bookId }: { bookId: string }) {
   );
 }
 
-export default async function Page({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
-  const { id } = await params;
+export default async function Page({ params }: { params: { id: string } }) {
+  const { id } = params;
+
+  const bookDetail = await BookDetail({ bookId: id });
+  const reviewList = await ReviewList({ bookId: id });
+
   return (
     <div className={style.container}>
-      <BookDetail bookId={id} />
+      {bookDetail}
       <ReviewEditor bookId={id} />
-      <ReviewList bookId={id} />
+      {reviewList}
     </div>
   );
 }
