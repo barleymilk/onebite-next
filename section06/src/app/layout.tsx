@@ -1,4 +1,5 @@
 import "./globals.css";
+import { ReactNode } from "react";
 import Link from "next/link";
 import style from "./layout.module.css";
 import { BookData } from "@/types";
@@ -23,8 +24,10 @@ async function Footer() {
 
 export default function RootLayout({
   children,
+  modal,
 }: Readonly<{
-  children: React.ReactNode;
+  children: ReactNode;
+  modal: ReactNode;
 }>) {
   return (
     <html lang="en">
@@ -36,6 +39,7 @@ export default function RootLayout({
           <main>{children}</main>
           <Footer />
         </div>
+        {modal}
         <div id="modal-root"></div>
       </body>
     </html>
