@@ -1,7 +1,6 @@
 // 자동으로 서버 액션으로 설정
 "use server";
 import { revalidateTag } from "next/cache";
-import { delay } from "@/util/delay";
 
 export async function createReviewAction(_: any, formData: FormData) {
   const bookId = formData.get("bookId")?.toString();
@@ -14,7 +13,6 @@ export async function createReviewAction(_: any, formData: FormData) {
   }
 
   try {
-    await delay(2000);
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_SERVER_URL}/review/`,
       {
